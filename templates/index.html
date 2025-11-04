@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras Ativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=3) }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('dashboard_page') }}" class="back-button">← Minhas Listas</a>
+            <input type="text" id="list-name-input" class="list-name-input" value="Carregando...">
+            <button id="logout-button">Sair</button>
+        </div>
+        
+        <div class="input-grid-container">
+            <div class="input-grid">
+                <div class="form-group item-name-group"> <label for="item-name">Item</label>
+                    <input type="text" id="item-name" placeholder="Ex: Arroz">
+                    <small id="price-suggestion"></small>
+                </div>
+                <div class="form-group">
+                    <label for="item-quantity">Quantidade</label>
+                    <input type="number" id="item-quantity" value="1" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="item-price">Preço (R$)</label>
+                    <input type="number" id="item-price" placeholder="Ex: 5.50" step="0.01">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="item-category">Categoria (Opcional)</label>
+                <input type="text" id="item-category" placeholder="Ex: Laticínios, Hortifrúti, Limpeza">
+            </div>
+        </div>
+        <button id="add-button">Adicionar Item</button>
+        <h2>Itens na Lista</h2>
+        <div id="shopping-list-container"></div>
+
+        <div class="total-display">
+            <h2>Total Comprado: R$ <span id="total-comprado">0.00</span></h2>
+            <h2 class="total-estimativa">Total Estimativa: R$ <span id="total-estimativa">0.00</span></h2>
+        </div>
+        
+        <button id="finalize-button" class="button-finalize">
+            Finalizar e Salvar Lista
+        </button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js', v=3) }}"></script>
+</body>
+</html>

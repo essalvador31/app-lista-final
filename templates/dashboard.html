@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Listas - Lista de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=3) }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo do Projeto" class="logo-header">
+            <h1>Minhas Listas</h1>
+            <button id="logout-button">Sair</button>
+        </div>
+        <a href="{{ url_for('list_page') }}" class="button-new-list">
+            Ir para minha lista ativa
+        </a>
+        <h2>Listas Salvas Anteriormente</h2>
+        <ul id="saved-lists" class="saved-list-container">
+            <li>Carregando listas...</li>
+        </ul>
+    </div>
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

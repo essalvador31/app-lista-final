@@ -1,0 +1,576 @@
+/* --- IMPORTA A NOVA FONTE MODERNA --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* --- DEFINE A NOVA PALETA DE CORES --- */
+:root {
+    --font-primary: 'Poppins', sans-serif;
+    --color-bg: #f4f7f6; /* Fundo cinza-claro */
+    --color-surface: #ffffff; /* O "cartão" branco */
+    --color-primary: #007aff; /* Um azul mais moderno */
+    --color-primary-dark: #005ecb;
+    --color-danger: #e63946; /* Um vermelho mais vivo */
+    --color-danger-dark: #d62828;
+    --color-success: #2a9d8f; /* Um verde-azulado (teal) */
+    --color-text-primary: #222; /* Texto principal (não preto puro) */
+    --color-text-secondary: #6c757d; /* Texto secundário (cinza) */
+    --color-border: #e0e0e0; /* Borda suave */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --border-radius: 8px; /* Cantos arredondados consistentes */
+}
+
+/* --- ESTILOS GERAIS --- */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    -webkit-font-smoothing: antialiased; /* Deixa a fonte mais suave */
+}
+
+.container {
+    background: var(--color-surface);
+    padding: 30px 40px; /* Mais espaço nas laterais */
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 600px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: var(--color-text-primary);
+    font-weight: 600; /* Fonte mais forte */
+}
+
+h2 {
+    font-size: 1.3em;
+    margin-top: 30px;
+    border-bottom: 1px solid var(--color-border); /* Borda mais fina */
+    padding-bottom: 15px;
+    font-weight: 500;
+}
+
+/* --- ESTILOS DE FORMULÁRIO (Login/Cadastro/Lista) --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.form-group label {
+    margin-bottom: 6px;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+.form-group input {
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0,122,255,0.1); /* Efeito "glow" ao focar */
+}
+
+/* --- BASE DE BOTÕES --- */
+button {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    transition: all 0.2s ease;
+}
+
+/* --- ESTILOS DO HEADER (Topo da Página) --- */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* space-between é melhor */
+    margin-bottom: 20px;
+    position: relative; /* O container é relativo */
+    gap: 15px; /* Espaçamento entre os itens */
+}
+/* Tira a posição absoluta */
+.logo-header, .back-button, #logout-button {
+    position: static; 
+    flex-shrink: 0; /* Não deixa encolher */
+    padding: 0;
+    background: none;
+    border: none;
+}
+/* Ocupa o espaço que sobra */
+.header h1, .list-name-input {
+    flex-grow: 1; /* Ocupa o espaço do meio */
+    margin: 0; /* Remove o margin do input */
+    width: auto; /* Deixa o flex tomar conta */
+    border: none;
+}
+/* Específico do dashboard */
+.dashboard-container .header {
+    justify-content: space-between;
+}
+
+/* Regra para o logo da página de Login/Cadastro */
+.logo {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+/* Regra para o logo do Dashboard/Lista */
+.dashboard-container .logo-header {
+    max-height: 50px;
+    width: auto;
+}
+
+#logout-button:hover {
+    background: #e9ecef;
+}
+.back-button:hover {
+    color: var(--color-primary-dark);
+}
+
+
+/* --- ESTILOS DO DASHBOARD (Tela Inicial) --- */
+/* Esta regra estava duplicada e foi removida */
+/* .dashboard-container .header { ... } */
+
+.button-new-list {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    background-color: var(--color-success);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.button-new-list:hover {
+    background-color: #238a7e; /* Verde mais escuro */
+}
+.saved-list-container {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+.saved-list-item {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.saved-list-item:hover {
+    background-color: var(--color-bg);
+    border-color: #d0d0d0;
+}
+.saved-list-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    text-decoration: none;
+    color: inherit;
+    flex-grow: 1;
+}
+.saved-list-name {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.saved-list-details {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+}
+.delete-list-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #ffb3b3; /* Vermelho suave */
+    padding: 10px 15px 10px 10px;
+    transition: color 0.2s, transform 0.2s;
+}
+.delete-list-btn:hover {
+    color: var(--color-danger);
+    transform: scale(1.1); /* Efeito "pop" */
+}
+
+/* --- ESTILOS DA PÁGINA DE LISTA (index.html) --- */
+.list-name-input {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 5px;
+    width: auto; 
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+    transition: border-color 0.2s;
+}
+.list-name-input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+/* --- ATUALIZAÇÃO 3: Estilos do Formulário de Adição --- */
+.input-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.input-grid {
+    display: grid;
+    /* Grelha nova: 3 colunas, mas a primeira é 2x maior */
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 15px;
+    text-align: left;
+}
+/* Esta regra não é mais necessária com a nova grelha */
+/* .input-grid .item-name-group { ... } */
+/* Esta regra não é mais necessária */
+/* .input-grid .form-group:last-child { ... } */
+
+/* Remove o 'margin-bottom' que estava no input-grid */
+.input-grid-container .form-group {
+    margin-bottom: 0;
+}
+#price-suggestion {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--color-success);
+    height: 15px;
+    margin-top: 4px;
+}
+/* --- FIM DA ATUALIZAÇÃO --- */
+
+#add-button {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+}
+#add-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* --- ATUALIZAÇÃO 3: Estilos da Lista Agrupada --- */
+#shopping-list-container {
+    margin-top: 20px;
+}
+h3.category-header {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: left;
+    margin: 25px 0 10px 0;
+    border-bottom: 2px solid var(--color-primary); /* Corrigido */
+    padding-bottom: 5px;
+}
+/* A lista em si não tem padding */
+ul.shopping-list {
+    list-style: none;
+    padding: 0;
+}
+.empty-list-message {
+    color: var(--color-text-secondary);
+    font-size: 1.1em;
+    padding: 20px;
+}
+/* --- FIM DA ATUALIZAÇÃO --- */
+
+
+.list-item {
+    display: flex;
+    align-items: center; /* Alinhamento vertical padrão */
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 16px;
+    transition: background-color 0.15s;
+}
+.list-item:hover {
+    background-color: #fcfcfc;
+}
+.list-item:nth-child(even) {
+    background-color: transparent; 
+}
+.item-details {
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* Alinha o checkbox e o texto */
+    gap: 15px;
+}
+.toggle-complete {
+    transform: scale(1.5);
+    margin: 0 5px;
+    cursor: pointer;
+    accent-color: var(--color-success);
+}
+.item-text {
+    display: flex;
+    flex-direction: column;
+}
+.item-text strong { 
+    color: var(--color-text-primary); 
+    font-weight: 500;
+}
+.item-text span { 
+    color: var(--color-text-secondary); 
+    font-size: 0.9em; 
+}
+.list-item.completed .item-text strong,
+.list-item.completed .item-text span {
+    text-decoration: line-through;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+.delete-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #ffb3b3;
+    transition: color 0.2s, transform 0.2s;
+}
+.delete-btn:hover {
+    color: var(--color-danger);
+    transform: scale(1.1);
+}
+.total-display {
+    margin-top: 30px;
+    padding: 20px 25px;
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    text-align: right;
+}
+.total-display h2 { 
+    margin: 5px 0;
+    color: var(--color-text-primary); 
+    font-size: 1.5em; 
+    border: none; 
+    font-weight: 600;
+    text-align: right;
+}
+.total-display .total-estimativa {
+    color: var(--color-text-secondary);
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.button-finalize {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: var(--color-danger);
+    color: white;
+    font-size: 18px;
+}
+.button-finalize:hover {
+    background-color: var(--color-danger-dark);
+}
+
+/* --- ESTILOS DA PÁGINA DE DETALHES (list_detail.html) --- */
+.list-summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: var(--color-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+.read-only-list .item-details {
+    gap: 20px;
+}
+.status-icon {
+    font-size: 1.2em;
+}
+
+/* --- ATUALIZAÇÃO 3: Estilos do Formulário de Edição --- */
+
+/* Torna a área de texto clicável */
+.item-text-container {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 5px 0; /* Aumenta a área de clique */
+}
+
+/* O formulário de edição em si */
+.item-edit-form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* A grelha para os inputs de edição */
+.item-edit-inputs {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+}
+/* Novo grupo de formulário para a categoria (dentro da edição) */
+.form-group-edit {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 5px;
+}
+.form-group-edit label {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+/* Estilo para os inputs dentro da lista */
+.item-edit-form input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    width: 100%;
+    box-sizing: border-box;
+}
+.item-edit-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0,122,255,0.1);
+}
+/* Container para os botões Salvar/Cancelar */
+.item-edit-buttons {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    gap: 10px;
+}
+/* Botão de Salvar (verde/sucesso) */
+.item-edit-buttons .save-edit-btn {
+    background-color: var(--color-success);
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+/* Botão de Cancelar (cinza/secundário) */
+.item-edit-buttons .cancel-edit-btn {
+    background-color: var(--color-bg);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    padding: 8px 12px;
+    font-size: 14px;
+}
+.item-edit-buttons .cancel-edit-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* --- CORREÇÃO DE ALINHAMENTO PARA O MODO DE EDIÇÃO --- */
+.list-item.editing {
+    align-items: flex-start; /* Alinha tudo ao topo */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.list-item.editing .toggle-complete,
+.list-item.editing .delete-btn {
+    margin-top: 8px; /* Alinha o checkbox e o lixo com o 1º input */
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ======================================================
+   ATUALIZAÇÃO 1: DESIGN RESPONSIVO (TELEMÓVEL)
+======================================================
+*/
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        -webkit-text-size-adjust: 100%;
+    }
+    .container {
+        padding: 20px;
+    }
+    h2 {
+        font-size: 1.2em;
+        padding-bottom: 10px;
+    }
+    .header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    .header h1, .list-name-input {
+        order: 1;
+        flex-basis: 100%;
+        margin: 10px 0 0 0;
+        text-align: center;
+    }
+    
+    /* --- ATUALIZAÇÃO 3: Grelha de Input Responsiva --- */
+    .input-grid {
+        grid-template-columns: 1fr 1fr; /* Duas colunas */
+        gap: 12px;
+    }
+    /* O "Item" passa a ocupar a linha toda */
+    .input-grid .item-name-group {
+        grid-column: 1 / -1; 
+    }
+    /* A "Qtd" e "Preço" ficam lado a lado */
+    .input-grid .form-group:last-child {
+        grid-column: 2 / 3;
+    }
+    /* --- FIM DA ATUALIZAÇÃO --- */
+
+    .saved-list-link {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .delete-list-btn {
+        align-self: center;
+    }
+    .list-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .item-details {
+        gap: 10px;
+    }
+    .item-text span {
+         word-break: break-word;
+    }
+    
+    /* --- ATUALIZAÇÃO 3: Edição Responsiva --- */
+    .item-edit-inputs {
+        grid-template-columns: 1fr; /* Uma coluna para tudo */
+    }
+    .list-item.editing .toggle-complete,
+    .list-item.editing .delete-btn {
+        margin-top: 5px; 
+    }
+}

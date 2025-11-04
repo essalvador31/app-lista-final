@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Lista</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=3) }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('dashboard_page') }}" class="back-button">← Minhas Listas</a>
+            <h1 id="list-name">Carregando...</h1>
+            <button id="logout-button">Sair</button>
+        </div>
+        
+        <div class="list-summary">
+            <span id="list-date"></span>
+            <span id="list-total"></span>
+        </div>
+
+        <h2>Itens Salvos na Lista</h2>
+        <ul id="shopping-list" class="read-only-list">
+            </ul>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='list_detail.js', v=3) }}"></script>
+</body>
+</html>

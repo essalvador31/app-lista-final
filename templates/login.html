@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Lista de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=3) }}">
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo do Projeto" class="logo">
+        <h1>Entrar</h1>
+        <div class="form-group">
+            <label for="username">Usuário</label>
+            <input type="text" id="username" placeholder="Seu nome de usuário">
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" placeholder="Sua senha">
+        </div>
+        <button id="login-button">Login</button>
+        <p id="error-message" style="color: red; text-align: center; margin-top: 10px;"></p>
+        <p style="text-align: center; margin-top: 20px;">
+            Não tem uma conta? <a href="/register">Cadastre-se</a>
+        </p>
+    </div>
+    <script src="{{ url_for('static', filename='auth.js') }}"></script>
+</body>
+</html>
