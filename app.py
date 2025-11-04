@@ -37,6 +37,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# --- CRIA AS TABELAS (CORREÇÃO FINAL) ---
+# Movemos o db.create_all() para aqui.
+# O Gunicorn vai ler isto e criar as tabelas antes de ligar.
+with app.app_context():
+    db.create_all()
+# ----------------------------------------
+
+
 # --- Modelos do Banco de Dados (Sem alteração) ---
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -309,8 +317,8 @@ def suggest_price(current_user, item_name):
 
 # --- Execução ---
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    # O db.create_all() foi movido para o topo do ficheiro,
+    # para que o Gunicorn o possa executar.
     app.run(debug=True)
     
     # Versão final pronta para publicar
