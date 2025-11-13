@@ -46,7 +46,9 @@ with app.app_context():
 
 
 # --- Modelos do Banco de Dados (Sem alteração) ---
+# --- Modelos do Banco de Dados (ajuste: definir explicitamente os nomes das tabelas) ---
 class User(db.Model):
+    __tablename__ = 'users'  # <- evita conflito com palavra reservada "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
@@ -54,15 +56,17 @@ class User(db.Model):
     price_history = db.relationship('PriceHistory', backref='owner', lazy=True, cascade="all, delete-orphan")
 
 class ShoppingList(db.Model):
+    __tablename__ = 'shopping_list'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, default="Nova Lista")
     created_date = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
-    is_active = db.Column(db.Boolean, default=True, nullable=False) 
-    total_price = db.Column(db.Float, default=0.0) 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    total_price = db.Column(db.Float, default=0.0)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- mudou para 'users.id'
     items = db.relationship('ShoppingListItem', backref='list', lazy=True, cascade="all, delete-orphan")
 
 class ShoppingListItem(db.Model):
+    __tablename__ = 'shopping_list_item'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
@@ -72,11 +76,13 @@ class ShoppingListItem(db.Model):
     category = db.Column(db.String(100), nullable=True, default="Outros")
 
 class PriceHistory(db.Model):
+    __tablename__ = 'price_history'
     id = db.Column(db.Integer, primary_key=True)
     item_name_lower = db.Column(db.String(100), nullable=False, index=True)
     price = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- mudou para 'users.id'
     category = db.Column(db.String(100), nullable=True, default="Outros")
+
 
 # --- O RESTO DO app.py (sem alteração) ---
 def token_required(f):
