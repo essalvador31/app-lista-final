@@ -16,39 +16,24 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SECRET_KEY'] = 'minha-chave-secreta-super-segura'
 
 # --- A GRANDE MUDANÇA (Base de Dados para PostgreSQL) ---
-# 1. Procura por uma DATABASE_URL (que o Render vai nos dar)
 database_url = os.environ.get('DATABASE_URL')
 
 if database_url:
     # Se ESTIVER na internet (no Render)
-    
-    # O Render usa "postgres://", mas o SQLAlchemy prefere "postgresql://"
-    # Esta linha corrige isso automaticamente.
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
-        
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 else:
     # Se ESTIVER no seu PC
-    # Continua a usar o bom e velho database.db (SQLite)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- CRIA AS TABELAS (CORREÇÃO FINAL) ---
-# Movemos o db.create_all() para aqui.
-# O Gunicorn vai ler isto e criar as tabelas antes de ligar.
-with app.app_context():
-    db.create_all()
-# ----------------------------------------
-
-
-# --- Modelos do Banco de Dados (Sem alteração) ---
-# --- Modelos do Banco de Dados (ajuste: definir explicitamente os nomes das tabelas) ---
+# --- Modelos do Banco de Dados (Com os seus ajustes __tablename__) ---
 class User(db.Model):
-    __tablename__ = 'users'  # <- evita conflito com palavra reservada "user"
+    __tablename__ = 'users'  # <- Perfeito!
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
@@ -56,17 +41,17 @@ class User(db.Model):
     price_history = db.relationship('PriceHistory', backref='owner', lazy=True, cascade="all, delete-orphan")
 
 class ShoppingList(db.Model):
-    __tablename__ = 'shopping_list'
+    __tablename__ = 'shopping_list' # <- Perfeito!
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, default="Nova Lista")
     created_date = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     total_price = db.Column(db.Float, default=0.0)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- mudou para 'users.id'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- Perfeito!
     items = db.relationship('ShoppingListItem', backref='list', lazy=True, cascade="all, delete-orphan")
 
 class ShoppingListItem(db.Model):
-    __tablename__ = 'shopping_list_item'
+    __tablename__ = 'shopping_list_item' # <- Perfeito!
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
@@ -76,13 +61,19 @@ class ShoppingListItem(db.Model):
     category = db.Column(db.String(100), nullable=True, default="Outros")
 
 class PriceHistory(db.Model):
-    __tablename__ = 'price_history'
+    __tablename__ = 'price_history' # <- Perfeito!
     id = db.Column(db.Integer, primary_key=True)
     item_name_lower = db.Column(db.String(100), nullable=False, index=True)
     price = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- mudou para 'users.id'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <- Perfeito!
     category = db.Column(db.String(100), nullable=True, default="Outros")
 
+# --- CRIA AS TABELAS (O LOCAL CORRETO) ---
+# O Gunicorn vai ler isto DEPOIS de saber quais são as classes
+# e ANTES de ligar o servidor.
+with app.app_context():
+    db.create_all()
+# ----------------------------------------
 
 # --- O RESTO DO app.py (sem alteração) ---
 def token_required(f):
@@ -321,6 +312,7 @@ def suggest_price(current_user, item_name):
         })
     return jsonify({}), 404
 
+# A sua "rota de emergência" (vamos mantê-la, não faz mal)
 @app.route('/criar-tabelas')
 def criar_tabelas():
     try:
@@ -330,12 +322,9 @@ def criar_tabelas():
     except Exception as e:
         return f"Erro: {e}"
 
-
-
 # --- Execução ---
 if __name__ == '__main__':
-    # O db.create_all() foi movido para o topo do ficheiro,
-    # para que o Gunicorn o possa executar.
+    # O db.create_all() foi movido para o local correto (depois das classes)
     app.run(debug=True)
     
     # Versão final pronta para publicar
