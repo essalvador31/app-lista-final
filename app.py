@@ -321,7 +321,7 @@ def suggest_price(current_user, item_name):
         })
     return jsonify({}), 404
 
-    @app.route('/criar-tabelas')
+@app.route('/criar-tabelas')
 def criar_tabelas():
     try:
         with app.app_context():
@@ -329,6 +329,7 @@ def criar_tabelas():
         return "Tabelas criadas com sucesso ❤️"
     except Exception as e:
         return f"Erro: {e}"
+
 
 
 # --- Execução ---
