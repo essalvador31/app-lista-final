@@ -321,6 +321,16 @@ def suggest_price(current_user, item_name):
         })
     return jsonify({}), 404
 
+    @app.route('/criar-tabelas')
+def criar_tabelas():
+    try:
+        with app.app_context():
+            db.create_all()
+        return "Tabelas criadas com sucesso ❤️"
+    except Exception as e:
+        return f"Erro: {e}"
+
+
 # --- Execução ---
 if __name__ == '__main__':
     # O db.create_all() foi movido para o topo do ficheiro,
