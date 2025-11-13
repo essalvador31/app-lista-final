@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isRegisterPage = !!document.getElementById('register-button');
     
     // URL do nosso servidor
-    const API_URL = 'https://listo-2u0o.onrender.com/api';
+    const API_URL = '/api';
     
     // Pega os campos de usuário, senha e mensagem de erro
     const usernameInput = document.getElementById('username');

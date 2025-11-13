@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shoppingListUl = document.getElementById('shopping-list');
     const logoutButton = document.getElementById('logout-button');
 
-    const API_URL = 'http://127.0.0.1:5000/api';
+    const API_URL = '/api';
     const authHeaders = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const savedListsUl = document.getElementById('saved-lists');
     const logoutButton = document.getElementById('logout-button');
-    const API_URL = 'http://127.0.0.1:5000/api';
+    const API_URL = '/api';
 
     const authHeaders = {
         'Content-Type': 'application/json',
